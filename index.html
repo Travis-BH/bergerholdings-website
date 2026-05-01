@@ -87,6 +87,33 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--gold); }
+    .nav-portal-btn {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      border: 1px solid var(--navy);
+      border-radius: 20px;
+      padding: 8px 20px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    nav.hero-mode .nav-portal-btn {
+      color: var(--white);
+      border-color: rgba(255,255,255,0.6);
+    }
+    nav.hero-mode .nav-portal-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--white);
+    }
+    .nav-portal-btn:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
 
     /* ── HERO ── */
     #hero {
@@ -655,6 +682,133 @@
     .fade-up-delay-2 { transition-delay: 0.2s; }
     .fade-up-delay-3 { transition-delay: 0.3s; }
     .fade-up-delay-4 { transition-delay: 0.4s; }
+
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s, background 0.3s;
+    }
+    nav.scrolled .nav-hamburger span { background: var(--navy); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--navy-deep);
+      z-index: 150;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .mobile-menu a {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold-light); }
+    .mobile-menu .mobile-portal-btn {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      padding: 12px 28px;
+      margin-top: 8px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      nav.scrolled { padding: 14px 24px; }
+      .nav-links, .nav-portal-btn { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+
+      #hero { padding: 0 24px 72px; min-height: 600px; }
+      .hero-scroll { right: 24px; }
+
+      .section-inner { padding: 0 24px; }
+      .thesis-inner { padding: 0 24px; }
+
+      #about { padding: 80px 0 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; margin-top: 40px; }
+
+      #thesis { padding: 60px 0; }
+      .thesis-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .thesis-divider { display: none; }
+      .thesis-item { padding: 0 !important; text-align: left !important; }
+
+      #portfolio { padding: 80px 0 60px; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-card:first-child { grid-row: span 1; aspect-ratio: 3/4; }
+      .portfolio-header { margin-bottom: 40px; }
+
+      #team { padding: 80px 0 60px; }
+      .team-grid { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+
+      #contact { padding: 80px 0; }
+      .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+
+      footer { flex-direction: column; gap: 20px; padding: 32px 24px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    }
+
+    @media (max-width: 520px) {
+      #hero { padding: 0 20px 60px; }
+      .hero-rule { height: 48px; margin-bottom: 24px; }
+
+      .section-inner { padding: 0 20px; }
+      .thesis-inner { padding: 0 20px; }
+
+      #about { padding: 64px 0 48px; }
+      .about-grid { gap: 36px; }
+      .stat-num { font-size: 38px; }
+
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-card:first-child { aspect-ratio: 3/4; }
+
+      .team-grid { grid-template-columns: 1fr; gap: 40px; }
+
+      .mobile-menu a { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
@@ -671,7 +825,20 @@
     <li><a href="#team">Team</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a href="https://bergerholdings.investnext.com/" class="nav-portal-btn" target="_blank" rel="noopener noreferrer">Investor Portal</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
+  <a href="#team" class="mobile-nav-link">Team</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+  <a href="https://bergerholdings.investnext.com/" class="mobile-portal-btn" target="_blank" rel="noopener noreferrer">Investor Portal</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -917,6 +1084,22 @@
 </footer>
 
 <script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
   // Nav scroll behavior
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
