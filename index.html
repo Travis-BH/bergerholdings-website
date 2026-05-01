@@ -378,7 +378,7 @@
     }
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 2px;
     }
     .portfolio-card {
@@ -392,6 +392,11 @@
       grid-row: span 2;
       aspect-ratio: auto;
     }
+    .card-name a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card-name a:hover { color: var(--gold-light); }
     .portfolio-card img {
       width: 100%;
       height: 100%;
@@ -463,11 +468,13 @@
     }
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 48px;
       margin-top: 64px;
     }
-    .team-card { }
+    .team-card { grid-column: span 2; }
+    .team-card:nth-child(4) { grid-column: 2 / span 2; }
+    .team-card:nth-child(5) { grid-column: 4 / span 2; }
     .team-photo {
       width: 100%;
       aspect-ratio: 3/4;
@@ -782,7 +789,12 @@
       .portfolio-header { margin-bottom: 40px; }
 
       #team { padding: 80px 0 60px; }
-      .team-grid { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 40px; }
+      .team-card { grid-column: span 1; }
+      .team-card:nth-child(4) { grid-column: span 1; }
+      .team-card:nth-child(5) { grid-column: span 1; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-card:first-child { grid-row: span 1; aspect-ratio: 3/4; }
 
       #contact { padding: 80px 0; }
       .contact-grid { grid-template-columns: 1fr; gap: 56px; }
@@ -862,24 +874,16 @@
     <div class="about-grid">
       <div class="about-left">
         <div class="divider fade-up"></div>
-        <p class="about-text fade-up fade-up-delay-1">Berger Holdings is a private real estate investment firm specializing in the acquisition and strategic repositioning of luxury hotel assets.</p>
-        <p class="about-body fade-up fade-up-delay-2">We identify opportunities in premier hospitality markets where capital, operational expertise, and brand positioning can be brought together to unlock lasting value. Our approach combines rigorous underwriting with a deep understanding of the guest experience — treating each asset as both a financial instrument and a hospitality enterprise. From select-service repositioning to full-scale resort development, we invest where quality endures.</p>
+        <p class="about-text fade-up fade-up-delay-1">Berger Holdings is a private investment firm based in Phoenix, Arizona, with a focus on real estate, hospitality, and entertainment.</p>
+        <p class="about-body fade-up fade-up-delay-2">The firm invests in direct real estate assets and operating companies through equity and credit structures. Through its affiliates, Berger Holdings owns or controls more than $1 billion in hospitality assets.</p>
       </div>
       <div class="about-right fade-up fade-up-delay-2">
         <div class="stat-row">
-          <span class="stat-num">$<span id="aum-count">0</span>M<sup>+</sup></span>
+          <span class="stat-num">$1B<sup>+</sup></span>
           <span class="stat-label">Assets Under Management</span>
         </div>
         <div class="stat-row">
-          <span class="stat-num"><span id="hotel-count">0</span></span>
-          <span class="stat-label">Hotel Assets Across Portfolio</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-num"><span id="market-count">0</span></span>
-          <span class="stat-label">Active Markets Nationwide</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-num"><span id="year-count">0</span></span>
+          <span class="stat-num"><span id="year-count">0</span><sup>+</sup></span>
           <span class="stat-label">Years of Hospitality Expertise</span>
         </div>
       </div>
@@ -891,18 +895,18 @@
 <section id="thesis">
   <div class="thesis-inner">
     <div class="thesis-item">
-      <div class="thesis-item-label">Strategy</div>
-      <div class="thesis-item-text">Value-Add Repositioning</div>
-    </div>
-    <div class="thesis-divider"></div>
-    <div class="thesis-item">
       <div class="thesis-item-label">Focus</div>
-      <div class="thesis-item-text">Luxury & Upper-Upscale Hotels</div>
+      <div class="thesis-item-text">Real Estate, Hospitality &amp; Entertainment</div>
     </div>
     <div class="thesis-divider"></div>
     <div class="thesis-item">
-      <div class="thesis-item-label">Markets</div>
-      <div class="thesis-item-text">Gateway & Resort Destinations</div>
+      <div class="thesis-item-label">Structure</div>
+      <div class="thesis-item-text">Equity &amp; Credit Investments</div>
+    </div>
+    <div class="thesis-divider"></div>
+    <div class="thesis-item">
+      <div class="thesis-item-label">Scale</div>
+      <div class="thesis-item-text">$1B+ in Hospitality Assets</div>
     </div>
   </div>
 </section>
@@ -918,54 +922,35 @@
     </div>
     <div class="portfolio-grid">
       <div class="portfolio-card fade-up">
-        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80" alt="The Meridian Hotel"/>
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80" alt="Sanctuary Camelback Mountain"/>
         <div class="card-overlay">
-          <span class="card-type">Luxury Full-Service</span>
-          <h3 class="card-name">The Meridian Hotel</h3>
-          <p class="card-location">Miami Beach, Florida</p>
+          <span class="card-type">Luxury Resort &amp; Spa</span>
+          <h3 class="card-name"><a href="https://www.sanctuaryaz.com/" target="_blank" rel="noopener noreferrer">Sanctuary Camelback Mountain</a></h3>
+          <p class="card-location">Paradise Valley, Arizona</p>
           <div class="card-detail">
-            <div class="card-detail-item"><strong>280</strong> Keys</div>
-            <div class="card-detail-item"><strong>$142M</strong> Acquisition</div>
-            <div class="card-detail-item"><strong>2021</strong> Vintage</div>
+            <div class="card-detail-item">An iconic luxury resort nestled on the north slope of Camelback Mountain, offering world-class spa, dining, and desert retreat experiences.</div>
           </div>
         </div>
       </div>
       <div class="portfolio-card fade-up fade-up-delay-1">
-        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Palmetto Resort"/>
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="The Denū Hotel & Spa"/>
         <div class="card-overlay">
-          <span class="card-type">Luxury Resort</span>
-          <h3 class="card-name">Palmetto Resort & Spa</h3>
-          <p class="card-location">Scottsdale, Arizona</p>
+          <span class="card-type">Luxury Hotel — Opening Fall 2026</span>
+          <h3 class="card-name"><a href="https://www.denuhotel.com/" target="_blank" rel="noopener noreferrer">The Den&#x16B; Hotel &amp; Spa</a></h3>
+          <p class="card-location">Downtown Phoenix, Arizona</p>
           <div class="card-detail">
-            <div class="card-detail-item"><strong>320</strong> Keys</div>
-            <div class="card-detail-item"><strong>$198M</strong> Value</div>
-            <div class="card-detail-item"><strong>2022</strong> Vintage</div>
+            <div class="card-detail-item">A landmark luxury hotel featuring Sartén Kitchen &amp; Bar, Nidos Rooftop Bar, Solstone Holistic Spa, and a rooftop pool. Co-developed by Berger Holdings.</div>
           </div>
         </div>
       </div>
       <div class="portfolio-card fade-up fade-up-delay-2">
-        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80" alt="The Alderton"/>
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="American Land Partners"/>
         <div class="card-overlay">
-          <span class="card-type">Boutique Luxury</span>
-          <h3 class="card-name">The Alderton</h3>
-          <p class="card-location">Nashville, Tennessee</p>
+          <span class="card-type">Land Development Platform</span>
+          <h3 class="card-name"><a href="https://americanland.partners/" target="_blank" rel="noopener noreferrer">American Land Partners</a></h3>
+          <p class="card-location">Phoenix, AZ &amp; Charlotte, NC</p>
           <div class="card-detail">
-            <div class="card-detail-item"><strong>148</strong> Keys</div>
-            <div class="card-detail-item"><strong>$87M</strong> Value</div>
-            <div class="card-detail-item"><strong>2023</strong> Vintage</div>
-          </div>
-        </div>
-      </div>
-      <div class="portfolio-card fade-up fade-up-delay-3">
-        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80" alt="Harbour Grand"/>
-        <div class="card-overlay">
-          <span class="card-type">Upper-Upscale</span>
-          <h3 class="card-name">Harbour Grand</h3>
-          <p class="card-location">Charleston, South Carolina</p>
-          <div class="card-detail">
-            <div class="card-detail-item"><strong>210</strong> Keys</div>
-            <div class="card-detail-item"><strong>$115M</strong> Value</div>
-            <div class="card-detail-item"><strong>2023</strong> Vintage</div>
+            <div class="card-detail-item">A national land development and entitlement firm that acquires, entitles, and develops residential land in partnership with leading homebuilders.</div>
           </div>
         </div>
       </div>
@@ -980,28 +965,34 @@
     <h2 class="section-heading fade-up fade-up-delay-1">The <em>People</em> Behind<br/>the Portfolio</h2>
     <div class="team-grid">
       <div class="team-card fade-up">
-        <div class="team-photo-placeholder"><span class="team-initials">JB</span></div>
-        <div class="team-name">Jonathan Berger</div>
-        <div class="team-title">Founder & Managing Partner</div>
-        <p class="team-bio">20+ years in hospitality investment and development. Previously led acquisitions at a top-10 hotel REIT with over $3B in transaction volume.</p>
+        <div class="team-photo-placeholder"><span class="team-initials">DB</span></div>
+        <div class="team-name">Darryl Berger</div>
+        <div class="team-title">Founder &amp; CEO</div>
+        <p class="team-bio">Founder of Berger Holdings with decades of experience in real estate, hospitality, and entertainment investment across premier markets.</p>
       </div>
       <div class="team-card fade-up fade-up-delay-1">
-        <div class="team-photo-placeholder"><span class="team-initials">SR</span></div>
-        <div class="team-name">Sarah Reid</div>
-        <div class="team-title">Chief Investment Officer</div>
-        <p class="team-bio">Leads deal sourcing and underwriting. Former VP at Blackstone Real Estate with expertise in full-service and resort acquisitions.</p>
+        <div class="team-photo-placeholder"><span class="team-initials">TM</span></div>
+        <div class="team-name">Todd Mark</div>
+        <div class="team-title">President &amp; Managing Director</div>
+        <p class="team-bio">Leads firm strategy and day-to-day operations, overseeing investment execution and portfolio management across all active platforms.</p>
       </div>
       <div class="team-card fade-up fade-up-delay-2">
-        <div class="team-photo-placeholder"><span class="team-initials">MC</span></div>
-        <div class="team-name">Michael Chen</div>
-        <div class="team-title">Head of Asset Management</div>
-        <p class="team-bio">Oversees portfolio operations and value creation. Backgrounds span brand negotiation, CapEx planning, and NOI optimization across 30+ assets.</p>
+        <div class="team-photo-placeholder"><span class="team-initials">BN</span></div>
+        <div class="team-name">Barry Nidiffer</div>
+        <div class="team-title">Executive Vice President of Development</div>
+        <p class="team-bio">Drives development initiatives across the portfolio, with deep expertise in luxury hospitality project delivery and capital planning.</p>
       </div>
       <div class="team-card fade-up fade-up-delay-3">
-        <div class="team-photo-placeholder"><span class="team-initials">AL</span></div>
-        <div class="team-name">Angela Lewis</div>
-        <div class="team-title">Director of Finance</div>
-        <p class="team-bio">Manages capital structure, investor relations, and fund accounting. CPA with 15 years in real estate private equity and fund administration.</p>
+        <div class="team-photo-placeholder"><span class="team-initials">TYM</span></div>
+        <div class="team-name">Tyler Mantsch</div>
+        <div class="team-title">Controller</div>
+        <p class="team-bio">Manages financial reporting, fund accounting, and internal controls across the firm's portfolio of real estate and operating company investments.</p>
+      </div>
+      <div class="team-card fade-up fade-up-delay-4">
+        <div class="team-photo-placeholder"><span class="team-initials">JR</span></div>
+        <div class="team-name">Jake Rodin</div>
+        <div class="team-title">Associate</div>
+        <p class="team-bio">Supports acquisitions, underwriting, and asset management across the firm's real estate and hospitality investment platforms.</p>
       </div>
     </div>
   </div>
@@ -1010,61 +1001,23 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-inner">
-    <div class="contact-grid">
-      <div class="contact-left fade-up">
-        <p class="section-label">Get in Touch</p>
-        <h2 class="section-heading">Let's Start a <em>Conversation</em></h2>
-        <div class="divider"></div>
-        <p class="contact-body">We welcome inquiries from institutional investors, family offices, and hospitality operating partners. If you have an asset to discuss or are interested in our investment platform, we'd like to hear from you.</p>
-        <div class="contact-details">
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Headquarters</span>
-            <span class="contact-detail-value">Phoenix, Arizona</span>
-          </div>
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Email</span>
-            <span class="contact-detail-value">info@bergerholdings.com</span>
-          </div>
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Phone</span>
-            <span class="contact-detail-value">+1 (602) 000-0000</span>
-          </div>
+    <div class="contact-left fade-up">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-heading">Let's Start a <em>Conversation</em></h2>
+      <div class="divider"></div>
+      <p class="contact-body">We welcome inquiries from institutional investors, family offices, and operating partners. Please reach out directly — we'd like to hear from you.</p>
+      <div class="contact-details">
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Headquarters</span>
+          <span class="contact-detail-value">5090 North 40th Street, Suite 330<br/>Phoenix, AZ 85018</span>
         </div>
-      </div>
-      <div class="contact-right fade-up fade-up-delay-2">
-        <div class="contact-form">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" placeholder="Your name"/>
-            <div class="focus-line"></div>
-          </div>
-          <div class="form-group">
-            <label>Organization</label>
-            <input type="text" placeholder="Firm or company"/>
-            <div class="focus-line"></div>
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" placeholder="your@email.com"/>
-            <div class="focus-line"></div>
-          </div>
-          <div class="form-group">
-            <label>Nature of Inquiry</label>
-            <select>
-              <option value="" disabled selected style="color:#999">Select one</option>
-              <option>Investor Relations</option>
-              <option>Asset Submission</option>
-              <option>Operating Partnership</option>
-              <option>General Inquiry</option>
-            </select>
-            <div class="focus-line"></div>
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea placeholder="Tell us about your interest…"></textarea>
-            <div class="focus-line"></div>
-          </div>
-          <button class="submit-btn">Send Inquiry →</button>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value"><a href="mailto:ir@bergerholdings.com" style="color:inherit;text-decoration:none;">ir@bergerholdings.com</a></span>
+        </div>
+        <div class="contact-detail-item">
+          <span class="contact-detail-label">Phone</span>
+          <span class="contact-detail-value">+1 (480) 937-0420</span>
         </div>
       </div>
     </div>
@@ -1100,6 +1053,14 @@
     });
   });
 
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
   // Nav scroll behavior
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
@@ -1131,9 +1092,6 @@
     entries.forEach(e => {
       if (e.isIntersecting && !countersStarted.done) {
         countersStarted.done = true;
-        animateCounter(document.getElementById('aum-count'), 750);
-        animateCounter(document.getElementById('hotel-count'), 12);
-        animateCounter(document.getElementById('market-count'), 8);
         animateCounter(document.getElementById('year-count'), 20);
       }
     });
