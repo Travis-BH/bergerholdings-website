@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Berger Holdings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #153D64;
+      --navy-deep: #0d2a47;
+      --navy-mid: #1e4f7f;
+      --gold: #b8985a;
+      --gold-light: #d4b87a;
+      --white: #ffffff;
+      --off-white: #f7f5f0;
+      --light-gray: #e8e4dc;
+      --text-light: #8a8a8a;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Montserrat', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      padding: 18px 60px;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+    .nav-brand {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: var(--navy);
+      text-transform: uppercase;
+    }
+    nav.hero-mode .nav-brand { color: var(--white); }
+    nav.hero-mode .nav-links a { color: rgba(255,255,255,0.85); }
+    nav.hero-mode .nav-links a:hover { color: var(--white); }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 60px 90px;
+      overflow: hidden;
+      background: var(--navy-deep);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(160deg, rgba(21,61,100,0.85) 0%, rgba(13,42,71,0.6) 60%, rgba(0,0,0,0.7) 100%),
+        url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1800&q=80') center/cover no-repeat;
+    }
+    .hero-rule {
+      width: 1px;
+      height: 80px;
+      background: var(--gold);
+      margin-bottom: 36px;
+    }
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.6);
+      margin-top: 28px;
+      position: relative;
+      z-index: 2;
+      max-width: 420px;
+      line-height: 1.8;
+    }
+    .hero-cta {
+      margin-top: 44px;
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 6px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-cta:hover { color: var(--gold-light); border-color: var(--gold-light); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+    .hero-scroll span {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { position: relative; }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+    .section-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--navy);
+    }
+    .section-heading em { font-style: italic; color: var(--gold); }
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px 0;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 120px 0 100px;
+      background: var(--white);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 64px;
+    }
+    .about-left { }
+    .about-text {
+      font-family: var(--serif);
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #2a2a2a;
+    }
+    .about-body {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--text-light);
+      margin-top: 28px;
+    }
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .stat-row:first-child { border-top: 1px solid var(--light-gray); }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-num sup {
+      font-size: 22px;
+      vertical-align: super;
+    }
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-align: right;
+      max-width: 160px;
+    }
+
+    /* ── THESIS STRIP ── */
+    #thesis {
+      background: var(--navy);
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    .thesis-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: grid;
+      grid-template-columns: 1fr 2px 1fr 2px 1fr;
+      gap: 0;
+      align-items: center;
+    }
+    .thesis-divider { background: rgba(255,255,255,0.12); height: 80px; }
+    .thesis-item {
+      padding: 0 48px;
+      text-align: center;
+    }
+    .thesis-item:first-child { padding-left: 0; text-align: left; }
+    .thesis-item:last-child { padding-right: 0; text-align: right; }
+    .thesis-icon {
+      font-family: var(--serif);
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .thesis-item-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 8px;
+    }
+    .thesis-item-text {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    /* ── PORTFOLIO ── */
+    #portfolio {
+      padding: 120px 0 100px;
+      background: var(--off-white);
+    }
+    .portfolio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .portfolio-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      background: var(--navy-deep);
+    }
+    .portfolio-card:first-child {
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+    .portfolio-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s;
+      opacity: 0.7;
+    }
+    .portfolio-card:hover img { transform: scale(1.06); opacity: 0.5; }
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,42,71,0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+    }
+    .card-type {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+    .card-name {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .card-location {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+    .card-detail {
+      margin-top: 16px;
+      display: flex;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .portfolio-card:hover .card-detail { opacity: 1; transform: translateY(0); }
+    .card-detail-item {
+      font-family: var(--sans);
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+    }
+    .card-detail-item strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--white);
+      font-family: var(--serif);
+    }
+
+    /* ── TEAM ── */
+    #team {
+      padding: 120px 0 100px;
+      background: var(--white);
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      margin-top: 64px;
+    }
+    .team-card { }
+    .team-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      background: var(--light-gray);
+      margin-bottom: 20px;
+      filter: grayscale(20%);
+      transition: filter 0.3s;
+    }
+    .team-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .team-initials {
+      font-family: var(--serif);
+      font-size: 42px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      font-style: italic;
+    }
+    .team-card:hover .team-photo { filter: grayscale(0%); }
+    .team-name {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--navy);
+    }
+    .team-title {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 6px;
+    }
+    .team-bio {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-light);
+      margin-top: 14px;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--navy-deep);
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,152,90,0.08) 0%, transparent 70%);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .contact-left .section-label { color: var(--gold-light); }
+    .contact-left .section-heading { color: var(--white); }
+    .contact-left .divider { background: var(--gold); }
+    .contact-body {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(255,255,255,0.5);
+    }
+    .contact-details {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .contact-detail-item { display: flex; flex-direction: column; gap: 4px; }
+    .contact-detail-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .contact-detail-value {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--white);
+    }
+    .contact-right { }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .form-group {
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding: 20px 0;
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--white);
+      resize: none;
+      appearance: none;
+    }
+    .form-group textarea { min-height: 80px; }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-group input:focus ~ .focus-line,
+    .form-group textarea:focus ~ .focus-line {
+      width: 100%;
+    }
+    .focus-line {
+      position: absolute;
+      bottom: -1px; left: 0;
+      height: 1px;
+      width: 0;
+      background: var(--gold);
+      transition: width 0.4s;
+    }
+    .submit-btn {
+      margin-top: 48px;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .submit-btn:hover { background: var(--gold); color: var(--navy-deep); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-deep);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.05em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold-light); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar" class="hero-mode">
+  <a class="nav-logo" href="#">
+    <img src="/mnt/user-data/uploads/1774291659702_image.png" alt="Berger Holdings" onerror="this.style.display='none'"/>
+    <span class="nav-brand">Berger Holdings</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rule"></div>
+  <p class="hero-eyebrow">Luxury Hospitality Investment</p>
+  <h1 class="hero-title">Acquiring Hotels of <em>Enduring</em> Distinction</h1>
+  <p class="hero-sub">A private investment firm focused on acquiring, repositioning, and operating luxury hotel assets across premier markets.</p>
+  <a href="#about" class="hero-cta">Discover Our Approach →</a>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label fade-up">About the Firm</p>
+    <h2 class="section-heading fade-up fade-up-delay-1">Where <em>Capital</em> Meets<br/>Craft</h2>
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="divider fade-up"></div>
+        <p class="about-text fade-up fade-up-delay-1">Berger Holdings is a private real estate investment firm specializing in the acquisition and strategic repositioning of luxury hotel assets.</p>
+        <p class="about-body fade-up fade-up-delay-2">We identify opportunities in premier hospitality markets where capital, operational expertise, and brand positioning can be brought together to unlock lasting value. Our approach combines rigorous underwriting with a deep understanding of the guest experience — treating each asset as both a financial instrument and a hospitality enterprise. From select-service repositioning to full-scale resort development, we invest where quality endures.</p>
+      </div>
+      <div class="about-right fade-up fade-up-delay-2">
+        <div class="stat-row">
+          <span class="stat-num">$<span id="aum-count">0</span>M<sup>+</sup></span>
+          <span class="stat-label">Assets Under Management</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num"><span id="hotel-count">0</span></span>
+          <span class="stat-label">Hotel Assets Across Portfolio</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num"><span id="market-count">0</span></span>
+          <span class="stat-label">Active Markets Nationwide</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-num"><span id="year-count">0</span></span>
+          <span class="stat-label">Years of Hospitality Expertise</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS STRIP -->
+<section id="thesis">
+  <div class="thesis-inner">
+    <div class="thesis-item">
+      <div class="thesis-item-label">Strategy</div>
+      <div class="thesis-item-text">Value-Add Repositioning</div>
+    </div>
+    <div class="thesis-divider"></div>
+    <div class="thesis-item">
+      <div class="thesis-item-label">Focus</div>
+      <div class="thesis-item-text">Luxury & Upper-Upscale Hotels</div>
+    </div>
+    <div class="thesis-divider"></div>
+    <div class="thesis-item">
+      <div class="thesis-item-label">Markets</div>
+      <div class="thesis-item-text">Gateway & Resort Destinations</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="portfolio-header">
+      <div>
+        <p class="section-label fade-up">Selected Investments</p>
+        <h2 class="section-heading fade-up fade-up-delay-1">Portfolio <em>Highlights</em></h2>
+      </div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card fade-up">
+        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80" alt="The Meridian Hotel"/>
+        <div class="card-overlay">
+          <span class="card-type">Luxury Full-Service</span>
+          <h3 class="card-name">The Meridian Hotel</h3>
+          <p class="card-location">Miami Beach, Florida</p>
+          <div class="card-detail">
+            <div class="card-detail-item"><strong>280</strong> Keys</div>
+            <div class="card-detail-item"><strong>$142M</strong> Acquisition</div>
+            <div class="card-detail-item"><strong>2021</strong> Vintage</div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card fade-up fade-up-delay-1">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80" alt="Palmetto Resort"/>
+        <div class="card-overlay">
+          <span class="card-type">Luxury Resort</span>
+          <h3 class="card-name">Palmetto Resort & Spa</h3>
+          <p class="card-location">Scottsdale, Arizona</p>
+          <div class="card-detail">
+            <div class="card-detail-item"><strong>320</strong> Keys</div>
+            <div class="card-detail-item"><strong>$198M</strong> Value</div>
+            <div class="card-detail-item"><strong>2022</strong> Vintage</div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card fade-up fade-up-delay-2">
+        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80" alt="The Alderton"/>
+        <div class="card-overlay">
+          <span class="card-type">Boutique Luxury</span>
+          <h3 class="card-name">The Alderton</h3>
+          <p class="card-location">Nashville, Tennessee</p>
+          <div class="card-detail">
+            <div class="card-detail-item"><strong>148</strong> Keys</div>
+            <div class="card-detail-item"><strong>$87M</strong> Value</div>
+            <div class="card-detail-item"><strong>2023</strong> Vintage</div>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card fade-up fade-up-delay-3">
+        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80" alt="Harbour Grand"/>
+        <div class="card-overlay">
+          <span class="card-type">Upper-Upscale</span>
+          <h3 class="card-name">Harbour Grand</h3>
+          <p class="card-location">Charleston, South Carolina</p>
+          <div class="card-detail">
+            <div class="card-detail-item"><strong>210</strong> Keys</div>
+            <div class="card-detail-item"><strong>$115M</strong> Value</div>
+            <div class="card-detail-item"><strong>2023</strong> Vintage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-inner">
+    <p class="section-label fade-up">Leadership</p>
+    <h2 class="section-heading fade-up fade-up-delay-1">The <em>People</em> Behind<br/>the Portfolio</h2>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-photo-placeholder"><span class="team-initials">JB</span></div>
+        <div class="team-name">Jonathan Berger</div>
+        <div class="team-title">Founder & Managing Partner</div>
+        <p class="team-bio">20+ years in hospitality investment and development. Previously led acquisitions at a top-10 hotel REIT with over $3B in transaction volume.</p>
+      </div>
+      <div class="team-card fade-up fade-up-delay-1">
+        <div class="team-photo-placeholder"><span class="team-initials">SR</span></div>
+        <div class="team-name">Sarah Reid</div>
+        <div class="team-title">Chief Investment Officer</div>
+        <p class="team-bio">Leads deal sourcing and underwriting. Former VP at Blackstone Real Estate with expertise in full-service and resort acquisitions.</p>
+      </div>
+      <div class="team-card fade-up fade-up-delay-2">
+        <div class="team-photo-placeholder"><span class="team-initials">MC</span></div>
+        <div class="team-name">Michael Chen</div>
+        <div class="team-title">Head of Asset Management</div>
+        <p class="team-bio">Oversees portfolio operations and value creation. Backgrounds span brand negotiation, CapEx planning, and NOI optimization across 30+ assets.</p>
+      </div>
+      <div class="team-card fade-up fade-up-delay-3">
+        <div class="team-photo-placeholder"><span class="team-initials">AL</span></div>
+        <div class="team-name">Angela Lewis</div>
+        <div class="team-title">Director of Finance</div>
+        <p class="team-bio">Manages capital structure, investor relations, and fund accounting. CPA with 15 years in real estate private equity and fund administration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-left fade-up">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-heading">Let's Start a <em>Conversation</em></h2>
+        <div class="divider"></div>
+        <p class="contact-body">We welcome inquiries from institutional investors, family offices, and hospitality operating partners. If you have an asset to discuss or are interested in our investment platform, we'd like to hear from you.</p>
+        <div class="contact-details">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Headquarters</span>
+            <span class="contact-detail-value">Phoenix, Arizona</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Email</span>
+            <span class="contact-detail-value">info@bergerholdings.com</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Phone</span>
+            <span class="contact-detail-value">+1 (602) 000-0000</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right fade-up fade-up-delay-2">
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name"/>
+            <div class="focus-line"></div>
+          </div>
+          <div class="form-group">
+            <label>Organization</label>
+            <input type="text" placeholder="Firm or company"/>
+            <div class="focus-line"></div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="your@email.com"/>
+            <div class="focus-line"></div>
+          </div>
+          <div class="form-group">
+            <label>Nature of Inquiry</label>
+            <select>
+              <option value="" disabled selected style="color:#999">Select one</option>
+              <option>Investor Relations</option>
+              <option>Asset Submission</option>
+              <option>Operating Partnership</option>
+              <option>General Inquiry</option>
+            </select>
+            <div class="focus-line"></div>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your interest…"></textarea>
+            <div class="focus-line"></div>
+          </div>
+          <button class="submit-btn">Send Inquiry →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Berger Holdings. All rights reserved.</span>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Nav scroll behavior
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 60;
+    navbar.classList.toggle('scrolled', scrolled);
+    navbar.classList.toggle('hero-mode', !scrolled);
+  });
+
+  // Intersection observer for fade-ups
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Animated counters
+  function animateCounter(el, target, duration = 1800, prefix = '', suffix = '') {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = Math.floor(start).toLocaleString();
+    }, 16);
+  }
+
+  const countersStarted = { done: false };
+  const aboutSection = document.getElementById('about');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !countersStarted.done) {
+        countersStarted.done = true;
+        animateCounter(document.getElementById('aum-count'), 750);
+        animateCounter(document.getElementById('hotel-count'), 12);
+        animateCounter(document.getElementById('market-count'), 8);
+        animateCounter(document.getElementById('year-count'), 20);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObserver.observe(aboutSection);
+</script>
+</body>
+</html>
